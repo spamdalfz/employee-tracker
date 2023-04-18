@@ -1,19 +1,19 @@
-require('dotenv').config()
-const express = require('express')
-const mysql = require('mysql2');
-//const prompt = 
-
+const express = require('express');
+const connection = require('./db');
 const app = express();
-const PORT = process.env.PORT || 3000;
+const port = process.env.PORT || 3000;
 
-// Set up middleware
-app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+// Routes for API
 
-// Define routes
+app.get('/api/departments', (req, res) => {
+    connection.query('SELECT * FROM department', (err, results) => {
+        if (err) throw err;
+        res.json(results);
+    });
+});
 
-//server start
-app.listen(PORT, () => {
-    console.log(`Server listening on port ${PORT}`);
+app.listen(port, () => {
+    console.log(`Server running at http://localhost:${port}`);
 });
