@@ -63,6 +63,56 @@ const updateEmployeeRole = (employee_id, role_id) => {
     });
 };
 
+// Update employee managers
+const updateEmployeeManager = (employee_id, manager_id) => {
+    return new Promise((resolve, reject) => {
+        connection.query('UPDATE employee SET manager_id = ? WHERE id = ?', [manager_id, employee_id], (err, res) => {
+            if (err) reject(err);
+            resolve(res);
+        });
+    });
+};
+
+// View employees by manager
+const getEmployeesByManager = (manager_id) => {
+    return new Promise((resolve, reject) => {
+        connection.query('SELECT * FROM employee WHERE manager_id = ?', [manager_id], (err, res) => {
+            if (err) reject(err);
+            resolve(res);
+        });
+    });
+};
+
+// View employees by department
+const getEmployeesByDepartment = (department_id) => {
+    return new Promise((resolve, reject) => {
+        connection.query('SELECT * FROM employee INNER JOIN role ON employee.role_id = role.id WHERE role.department_id = ?', [department_id], (err, res) => {
+            if (err) reject(err);
+            resolve(res);
+        });
+    });
+};
+
+// Delete departments, roles, and employees
+const deleteRecord = (table, id) => {
+    return new Promise((resolve, reject) => {
+        connection.query('DELETE FROM ?? WHERE id = ?', [table, id], (err, res) => {
+            if (err) reject(err);
+            resolve(res);
+        });
+    });
+};
+
+// View the total utilized budget of a department
+const getDepartmentBudget = (department_id) => {
+    return new Promise((resolve, reject) => {
+        connection.query('SELECT SUM(role.salary) as budget FROM employee INNER JOIN role ON employee.role_id = role.id WHERE role.department_id = ?', [department_id], (err, res) => {
+            if (err) reject(err);
+            resolve(res);
+        });
+    });
+};
+
 module.exports = {
     getDepartments,
     getRoles,
@@ -70,5 +120,10 @@ module.exports = {
     addDepartment,
     addRole,
     addEmployee,
-    updateEmployeeRole
+    updateEmployeeRole,
+    updateEmployeeManager,
+    getEmployeesByManager,
+    getEmployeesByDepartment,
+    deleteRecord,
+    getDepartmentBudget
 };

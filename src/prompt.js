@@ -1,4 +1,5 @@
 const inquirer = require('inquirer');
+
 const {
     getDepartments,
     getRoles,
@@ -24,6 +25,11 @@ const mainPrompt = () => {
                 'Add a role',
                 'Add an employee',
                 'Update an employee role',
+                'Update an employee manager',
+                'View employees by manager',
+                'View employees by department',
+                'Delete department, role, or employee',
+                'View department budget',
                 'Exit'
             ]
         }
@@ -120,5 +126,6 @@ module.exports = {
     addDepartmentPrompt,
     addRolePrompt,
     addEmployeePrompt,
-    updateEmployeeRolePrompt
+    updateEmployeeRolePrompt,
+
 };
