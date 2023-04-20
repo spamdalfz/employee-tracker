@@ -9,7 +9,6 @@ const dbConfig = {
     database: process.env.DB_DATABASE
 };
 
-
 const getDepartments = async () => {
     try {
         const connection = await mysql.createConnection(dbConfig);
@@ -121,6 +120,7 @@ const createDepartment = async (departmentName) => {
         const connection = await mysql.createConnection(dbConfig);
         try {
             await connection.query('INSERT INTO departments SET ?', { name: departmentName });
+            console.log(`Successfully created the ${departmentName} department in the Employee Database`);
         } catch (err) {
             console.error('Error creating department:', err);
         } finally {
@@ -141,6 +141,7 @@ const createRole = async (roleTitle, roleSalary, roleDepartment) => {
                 salary: roleSalary,
                 department_id: roleDepartment
             });
+            console.log(`Successfully created ${roleTitle} with a salary of ${roleSalary}`);
         } catch (err) {
             console.error('Error creating role:', err);
         } finally {
@@ -222,7 +223,7 @@ const deleteEntity = async (entityType, entityId) => {
             }
             await connection.query('DELETE FROM ?? WHERE id = ?', [entityType + 's', entityId]);
             await connection.commit();
-            console.log(`Successfully deleted ${entityType} with id ${entityId}`);
+            console.log(`Successfully deleted ${entityType}`);
         } catch (err) {
             console.error(`Error deleting ${entityType} with id ${entityId}:`, err);
             await connection.rollback();
@@ -235,7 +236,6 @@ const deleteEntity = async (entityType, entityId) => {
         throw err; // re-throw the error so the calling function can handle it
     }
 };
-
 
 // Export the functions for use in other modules
 module.exports = {
