@@ -1,14 +1,4 @@
-const inquirer = require('inquirer');
 
-const {
-    getDepartments,
-    getRoles,
-    getEmployees,
-    addDepartment,
-    addRole,
-    addEmployee,
-    updateEmployeeRole
-} = require('./queries');
 
 // Prompt for main menu actions
 const mainPrompt = () => {
