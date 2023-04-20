@@ -113,6 +113,82 @@ const updateEmployeeRolePrompt = async () => {
     ]);
 };
 
+// Prompt for updating an employee manager
+const updateEmployeeManagerPrompt = async () => {
+    const employeeChoices = (await getEmployees()).map(employee => ({ name: employee.first_name + ' ' + employee.last_name, value: employee.id }));
+    const managerChoices = await getManagers();
+
+    return inquirer.prompt([
+        {
+            type: 'list',
+            name: 'employeeToUpdate',
+            message: 'Which employee do you want to update?',
+            choices: employeeChoices
+        },
+        {
+            type: 'list',
+            name: 'newManager',
+            message: 'Who is the new manager for this employee?',
+            choices: [...managerChoices, { name: 'None', value: null }]
+        }
+    ]);
+};
+
+// Prompt for deleting department, role, or employee
+const deleteEntityPrompt = async () => {
+    const departmentChoices = await getDepartments();
+    const roleChoices = await getRoles();
+    const employeeChoices = await getEmployees().map(employee => ({ name: employee.first_name + ' ' + employee.last_name, value: employee.id }));
+
+    return inquirer.prompt([
+        {
+            type: 'list',
+            name: 'entityType',
+            message: 'What do you want to delete?',
+            choices: [
+                { name: 'Department', value: 'department' },
+                { name: 'Role', value: 'role' },
+                { name: 'Employee', value: 'employee' }
+            ]
+        },
+        {
+            type: 'list',
+            name: 'departmentToDelete',
+            message: 'Which department do you want to delete?',
+            choices: departmentChoices,
+            when: (answers) => answers.entityType === 'department'
+        },
+        {
+            type: 'list',
+            name: 'roleToDelete',
+            message: 'Which role do you want to delete?',
+            choices: roleChoices,
+            when: (answers) => answers.entityType === 'role'
+        },
+        {
+            type: 'list',
+            name: 'employeeToDelete',
+            message: 'Which employee do you want to delete?',
+            choices: employeeChoices,
+            when: (answers) => answers.entityType === 'employee'
+        }
+    ]);
+};
+
+// Prompt for viewing department budget
+const viewDepartmentBudgetPrompt = async () => {
+    const departmentChoices = await getDepartments();
+
+    return inquirer.prompt([
+        {
+            type: 'list',
+            name: 'departmentToView',
+            message: 'Which department budget do you want to view?',
+            choices: departmentChoices
+        }
+    ]);
+};
+
 // Export the prompt functions
 module.exports = {
     mainPrompt,
@@ -120,4 +196,7 @@ module.exports = {
     addRolePrompt,
     addEmployeePrompt,
     updateEmployeeRolePrompt,
+    updateEmployeeManagerPrompt,
+    deleteEntityPrompt,
+    viewDepartmentBudgetPrompt
 };
