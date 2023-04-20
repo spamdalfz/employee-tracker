@@ -20,7 +20,21 @@ const actionHandlers = {
     "Update an employee role": updateEmployeeRoleAction,
 };
 
+const printWelcomeMessage = () => {
+    console.log(`
+    
+                           ▄▀▄     ▄▀▄
+                          ▄█░░▀▀▀▀▀░░█▄
+                      ▄▄  █░░░░░░░░░░░█  ▄▄
+                     █▄▄█ █░░▀░░┬░░▀░░█ █▄▄█
+█▀▀ █▀▄▀█ █▀█ █   █▀█ █▄█ █▀▀ █▀▀   █▀▄▀█ ▄▀█ █▄ █ ▄▀█ █▀▀ █▀▀ █▀█
+██▄ █ ▀ █ █▀▀ █▄▄ █▄█  █  ██▄ ██▄   █ ▀ █ █▀█ █ ▀█ █▀█ █▄█ ██▄ █▀▄
+
+
+    `);
+};
 const main = async () => {
+    printWelcomeMessage();
     let exitApp = false;
 
     while (!exitApp) {
