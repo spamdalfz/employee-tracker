@@ -38,7 +38,13 @@ To use this application, please follow the steps below:
 
 For a more detailed explanation of how to use this application, please refer to the [video tutorial]('video link here').
 
-![Alt Text](./assets/svg.gif)
+![Alt Text](./assets/images/screenshot.JPG)
+
+## Dependencies
+This project requires the following dependencies:
+- [inquirer](https://www.npmjs.com/package/inquirer)
+- [mysql2](https://www.npmjs.com/package/mysql2)
+- [console.table](https://www.npmjs.com/package/console.table)
 
 ## License
 
