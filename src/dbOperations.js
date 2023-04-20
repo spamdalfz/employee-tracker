@@ -217,10 +217,6 @@ const deleteEntity = async (entityType, entityId) => {
         const connection = await mysql.createPool(dbConfig).getConnection();
         try {
             await connection.beginTransaction();
-            if (entityType === 'employee') {
-                // Set the manager_id of the employees that had this employee as their manager to null
-                await connection.query('UPDATE employees SET manager_id = NULL WHERE manager_id = ?', [entityId]);
-            }
             await connection.query('DELETE FROM ?? WHERE id = ?', [entityType + 's', entityId]);
             await connection.commit();
             console.log(`Successfully deleted ${entityType}`);
