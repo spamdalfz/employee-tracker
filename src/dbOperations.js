@@ -30,8 +30,13 @@ const getRoles = async () => {
     try {
         const connection = await mysql.createConnection(dbConfig);
         try {
-            const [rows] = await connection.query('SELECT * FROM roles');
-            return rows.map(row => ({ name: row.title, value: row.id }));
+            const query = `
+            SELECT r.id, r.title, d.name AS department, r.salary
+            FROM roles r
+            INNER JOIN departments d ON r.department_id = d.id
+            `;
+            const [rows] = await connection.query(query);
+            return rows.map(row => ({ name: row.title, value: row.id, department: row.department, salary: row.salary }));
         } catch (err) {
             console.error('Error fetching roles:', err);
         } finally {
@@ -42,17 +47,43 @@ const getRoles = async () => {
     }
 };
 
+
 const getEmployees = async () => {
     try {
         const connection = await mysql.createConnection(dbConfig);
         try {
-            const [rows] = await connection.query('SELECT * FROM employees');
-            return rows.map(row => ({
-                name: `${row.first_name} ${row.last_name}`,
-                value: row.id
-            }));
+            const query = `
+            SELECT e.id, e.first_name, e.last_name, r.title AS roles, d.name AS department, r.salary, CONCAT(m.first_name, ' ', m.last_name) AS manager
+            FROM employees e
+            LEFT JOIN employees m ON e.manager_id = m.id
+            INNER JOIN roles r ON e.role_id = r.id
+            INNER JOIN departments d ON r.department_id = d.id
+            ORDER BY e.id;
+          `;
+            const [rows] = await connection.query(query);
+            return rows;
         } catch (err) {
             console.error('Error fetching employees:', err);
+        } finally {
+            await connection.end();
+        }
+    } catch (err) {
+        console.error('Error connecting to the database:', err);
+    }
+};
+
+const getManagers = async () => {
+    try {
+        const connection = await mysql.createConnection(dbConfig);
+        try {
+            const [rows] = await connection.query(`
+          SELECT id, CONCAT(first_name, ' ', last_name) AS name
+          FROM employees
+          WHERE manager_id IS NULL
+        `);
+            return rows.map(row => ({ name: row.name, value: row.id }));
+        } catch (err) {
+            console.error('Error fetching managers:', err);
         } finally {
             await connection.end();
         }
@@ -106,7 +137,7 @@ const createEmployee = async (employeeFirstName, employeeLastName, employeeRole,
                 first_name: employeeFirstName,
                 last_name: employeeLastName,
                 role_id: employeeRole,
-                manager_id: employeeManager
+                manager_id: employeeManager,
             });
         } catch (err) {
             console.error('Error creating employee:', err);
@@ -142,6 +173,7 @@ module.exports = {
     getDepartments,
     getRoles,
     getEmployees,
+    getManagers,
     createDepartment,
     createRole,
     createEmployee,

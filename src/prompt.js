@@ -1,4 +1,4 @@
-const { getDepartments, getRoles, getEmployees } = require('./dbOperations');
+const { getDepartments, getRoles, getEmployees, getManagers } = require('./dbOperations');
 const inquirer = require('inquirer');
 
 // Prompt for main menu actions
@@ -64,7 +64,7 @@ const addRolePrompt = async () => {
 // Prompt for adding a new employee
 const addEmployeePrompt = async () => {
     const roleChoices = await getRoles();
-    const managerChoices = await getEmployees();
+    const managerChoices = await getManagers();
     return inquirer.prompt([
         {
             type: 'input',
@@ -93,8 +93,10 @@ const addEmployeePrompt = async () => {
 
 // Prompt for updating an employee role
 const updateEmployeeRolePrompt = async () => {
-    const employeeChoices = await getEmployees();
+    const employeeChoices = (await getEmployees()).map(employee => ({ name: employee.first_name + ' ' + employee.last_name, value: employee.id }));
+
     const roleChoices = await getRoles();
+
     return inquirer.prompt([
         {
             type: 'list',
