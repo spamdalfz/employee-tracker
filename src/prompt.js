@@ -9,20 +9,18 @@ const mainPrompt = () => {
             name: 'action',
             message: 'What would you like to do?',
             choices: [
-                'View all departments',
-                'View all roles',
-                'View all employees',
-                'View employees by manager',
-                'View employees by department',
-                'Add a department',
-                'Add a role',
-                'Add an employee',
-                'Update an employee role',
-                'Update an employee manager',
-                'Delete department, role, or employee',
-                'View department budget',
-                'Exit'
-            ]
+                "View all departments",
+                "View all roles",
+                "View all employees",
+                "Add a department",
+                "Add a role",
+                "Add an employee",
+                "Update an employee role",
+                "Update an employee's manager",
+                "Delete department, role, or employee",
+                "View department budget",
+                "Exit",
+            ],
         }
     ]);
 };
@@ -138,7 +136,8 @@ const updateEmployeeManagerPrompt = async () => {
 const deleteEntityPrompt = async () => {
     const departmentChoices = await getDepartments();
     const roleChoices = await getRoles();
-    const employeeChoices = await getEmployees().map(employee => ({ name: employee.first_name + ' ' + employee.last_name, value: employee.id }));
+    const employeeData = await getEmployees(); // Await the result of getEmployees()
+    const employeeChoices = employeeData.map(employee => ({ name: employee.first_name + ' ' + employee.last_name, value: employee.id }));
 
     return inquirer.prompt([
         {

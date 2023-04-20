@@ -92,6 +92,29 @@ const getManagers = async () => {
     }
 };
 
+// Get the budget of a department
+const getDepartmentBudget = async (departmentId) => {
+    try {
+        const connection = await mysql.createConnection(dbConfig);
+        try {
+            const query = `
+                SELECT SUM(r.salary) as budget
+                FROM employees e
+                INNER JOIN roles r ON e.role_id = r.id
+                WHERE r.department_id = ?
+            `;
+            const [rows] = await connection.query(query, [departmentId]);
+            return rows[0].budget;
+        } catch (err) {
+            console.error('Error getting department budget:', err);
+        } finally {
+            await connection.end();
+        }
+    } catch (err) {
+        console.error('Error connecting to the database:', err);
+    }
+};
+
 // Create a new department in the database
 const createDepartment = async (departmentName) => {
     try {
@@ -168,6 +191,52 @@ const updateEmployeeRole = async (employeeId, roleId) => {
     }
 };
 
+// Update an employee's manager in the database
+const updateEmployeeManager = async (employeeId, managerId) => {
+    try {
+        const connection = await mysql.createConnection(dbConfig);
+        try {
+            await connection.query(
+                'UPDATE employees SET manager_id = ? WHERE id = ?',
+                [managerId, employeeId]
+            );
+        } catch (err) {
+            console.error('Error updating employee manager:', err);
+        } finally {
+            await connection.end();
+        }
+    } catch (err) {
+        console.error('Error connecting to the database:', err);
+    }
+};
+
+// Delete an entity (department, role, or employee) in the database
+const deleteEntity = async (entityType, entityId) => {
+    try {
+        const connection = await mysql.createPool(dbConfig).getConnection();
+        try {
+            await connection.beginTransaction();
+            if (entityType === 'employee') {
+                // Set the manager_id of the employees that had this employee as their manager to null
+                await connection.query('UPDATE employees SET manager_id = NULL WHERE manager_id = ?', [entityId]);
+            }
+            await connection.query('DELETE FROM ?? WHERE id = ?', [entityType + 's', entityId]);
+            await connection.commit();
+            console.log(`Successfully deleted ${entityType} with id ${entityId}`);
+        } catch (err) {
+            console.error(`Error deleting ${entityType} with id ${entityId}:`, err);
+            await connection.rollback();
+            throw err; // re-throw the error so the calling function can handle it
+        } finally {
+            connection.release(); // release the connection back to the pool
+        }
+    } catch (err) {
+        console.error('Error connecting to the database:', err);
+        throw err; // re-throw the error so the calling function can handle it
+    }
+};
+
+
 // Export the functions for use in other modules
 module.exports = {
     getDepartments,
@@ -177,5 +246,8 @@ module.exports = {
     createDepartment,
     createRole,
     createEmployee,
-    updateEmployeeRole
+    updateEmployeeRole,
+    updateEmployeeManager,
+    deleteEntity,
+    getDepartmentBudget
 };

@@ -3,6 +3,9 @@ const {
     addRolePrompt,
     addEmployeePrompt,
     updateEmployeeRolePrompt,
+    updateEmployeeManagerPrompt,
+    deleteEntityPrompt,
+    viewDepartmentBudgetPrompt,
 } = require("./prompt");
 
 const {
@@ -13,6 +16,9 @@ const {
     createRole,
     createEmployee,
     updateEmployeeRole,
+    updateEmployeeManager,
+    deleteEntity,
+    getDepartmentBudget,
 } = require("./dbOperations");
 
 const viewAllDepartments = async () => {
@@ -60,6 +66,22 @@ const updateEmployeeRoleAction = async () => {
     await updateEmployeeRole(employeeToUpdate, newRole);
 };
 
+const updateEmployeeManagerAction = async () => {
+    const { employeeToUpdate, newManager } = await updateEmployeeManagerPrompt();
+    await updateEmployeeManager(employeeToUpdate, newManager);
+};
+
+const deleteEntityAction = async () => {
+    const { entityType, departmentToDelete, roleToDelete, employeeToDelete } = await deleteEntityPrompt();
+    await deleteEntity(entityType, departmentToDelete || roleToDelete || employeeToDelete);
+};
+
+const viewDepartmentBudget = async () => {
+    const { departmentToView } = await viewDepartmentBudgetPrompt();
+    const budget = await getDepartmentBudget(departmentToView);
+    console.log(`The budget for the selected department is: ${budget}`);
+};
+
 module.exports = {
     viewAllDepartments,
     viewAllRoles,
@@ -67,5 +89,8 @@ module.exports = {
     addDepartment,
     addRole,
     addEmployee,
-    updateEmployeeRoleAction
+    updateEmployeeRoleAction,
+    updateEmployeeManagerAction,
+    deleteEntityAction,
+    viewDepartmentBudget
 };

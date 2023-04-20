@@ -8,6 +8,9 @@ const {
     addRole,
     addEmployee,
     updateEmployeeRoleAction,
+    updateEmployeeManagerAction,
+    deleteEntityAction,
+    viewDepartmentBudget
 } = require("./actions");
 
 const actionHandlers = {
@@ -18,7 +21,11 @@ const actionHandlers = {
     "Add a role": addRole,
     "Add an employee": addEmployee,
     "Update an employee role": updateEmployeeRoleAction,
+    "Update an employee's manager": updateEmployeeManagerAction,
+    "Delete department, role, or employee": deleteEntityAction,
+    "View department budget": viewDepartmentBudget,
 };
+
 
 const printWelcomeMessage = () => {
     console.log(`
@@ -35,17 +42,19 @@ const printWelcomeMessage = () => {
 };
 const main = async () => {
     printWelcomeMessage();
-    let exitApp = false;
-
-    while (!exitApp) {
+    let exit = false;
+    while (!exit) {
         const { action } = await mainPrompt();
 
-        if (action in actionHandlers) {
-            await actionHandlers[action]();
-        } else if (action === "Exit") {
-            exitApp = true;
+        if (action === "Exit") {
+            exit = true;
         } else {
-            console.log("Unknown action:", action);
+            const actionHandler = actionHandlers[action];
+            if (actionHandler) {
+                await actionHandler();
+            } else {
+                console.log('Unknown action:', action);
+            }
         }
     }
 };
