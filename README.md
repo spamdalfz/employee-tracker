@@ -32,7 +32,7 @@ To use this application, please follow the steps below:
 
 1. Open a terminal window and navigate to the ```src``` directory of the application
 2. Start the application by running ```node app.js```
-3. Choose an action from the main menu by selecting the corresponding number or using the arrow keys and pressing Enter
+3. Choose an action from the main menu by using the arrow keys and pressing Enter
 4. Follow the prompts to perform the desired action
 5. To exit the application, select "Exit" from the main menu or press Ctrl + C
 
