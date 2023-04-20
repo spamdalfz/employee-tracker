@@ -45,7 +45,7 @@ const addDepartment = async () => {
 const addRole = async () => {
     const { roleTitle, roleSalary, roleDepartment } = await addRolePrompt();
     await createRole(roleTitle, roleSalary, roleDepartment);
-    console.log(`\n Successfully created ${roleTitle} in the ${roleDepartment} department with a salary of ${roleSalary} \n`);
+    console.log(`\n Successfully created ${roleTitle} role with a salary of ${roleSalary} \n`);
 };
 
 const addEmployee = async () => {

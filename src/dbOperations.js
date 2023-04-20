@@ -24,7 +24,7 @@ const getDepartments = async () => {
         console.error('Error connecting to the database:', err);
     }
 };
-
+// 
 const getRoles = async () => {
     try {
         const connection = await mysql.createConnection(dbConfig);
