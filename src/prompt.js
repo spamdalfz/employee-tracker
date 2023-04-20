@@ -1,4 +1,5 @@
-
+const { getDepartments, getRoles, getEmployees } = require('./dbOperations');
+const inquirer = require('inquirer');
 
 // Prompt for main menu actions
 const mainPrompt = () => {
@@ -117,5 +118,4 @@ module.exports = {
     addRolePrompt,
     addEmployeePrompt,
     updateEmployeeRolePrompt,
-
 };
