@@ -39,11 +39,13 @@ const viewAllEmployees = async () => {
 const addDepartment = async () => {
     const { departmentName } = await addDepartmentPrompt();
     await createDepartment(departmentName);
+    console.log(`\n Successfully added ${departmentName} to the database \n`);
 };
 
 const addRole = async () => {
     const { roleTitle, roleSalary, roleDepartment } = await addRolePrompt();
     await createRole(roleTitle, roleSalary, roleDepartment);
+    console.log(`\n Successfully created ${roleTitle} in the ${roleDepartment} department with a salary of ${roleSalary} \n`);
 };
 
 const addEmployee = async () => {
@@ -59,27 +61,32 @@ const addEmployee = async () => {
         employeeRole,
         employeeManager
     );
+    console.log(`\n Successfully added ${employeeFirstName} ${employeeLastName} to the database \n`);
 };
 
 const updateEmployeeRoleAction = async () => {
     const { employeeToUpdate, newRole } = await updateEmployeeRolePrompt();
     await updateEmployeeRole(employeeToUpdate, newRole);
+    console.log('\n Successfully updated employee role \n')
 };
 
 const updateEmployeeManagerAction = async () => {
     const { employeeToUpdate, newManager } = await updateEmployeeManagerPrompt();
     await updateEmployeeManager(employeeToUpdate, newManager);
+    console.log(`\n Successfully updated employee manager \n`)
 };
 
 const deleteEntityAction = async () => {
     const { entityType, departmentToDelete, roleToDelete, employeeToDelete } = await deleteEntityPrompt();
     await deleteEntity(entityType, departmentToDelete || roleToDelete || employeeToDelete);
+    console.log(`\n Successfully deleted ${entityType} \n`);
+
 };
 
 const viewDepartmentBudget = async () => {
     const { departmentToView } = await viewDepartmentBudgetPrompt();
     const budget = await getDepartmentBudget(departmentToView);
-    console.log(`The budget for the selected department is: ${budget}`);
+    console.log(`\n The budget for the selected department is: ${budget} \n`);
 };
 
 module.exports = {
