@@ -6,28 +6,38 @@
 The Employee Manager CLI Application is a Node.js command-line interface designed to manage an employee database. The application allows the user to view, add, update, and delete departments, roles, and employees, as well as view employees by manager or department and view department budgets. The user is presented with a series of prompts to interact with the database and perform these actions.
 
 ## Table of Contents
-- [Installation](#installation)
-- [Usage](#usage)
+- [Setting up the Database](#setting-up-the-database)
+- [Running the Application](#running-the-application)
 - [License](#license)
 - [Contributing](#contributing)
 - [Tests](#tests)
 - [Questions](#questions)
 
-## Installation
+## Setting up the Database
 To install this application, follow these steps:
 
 1. Clone the repository from GitHub
-2. Install and set up MySQL on your local machine if you haven't already done so. You can download and install MySQL from the [official website](https://dev.mysql.com/downloads/mysql/).
-3. Download and install Node.js from the [official website](https://nodejs.org/en/download) if you haven't already done so
+2. Download and install MySQL from the [official website](https://dev.mysql.com/downloads/mysql/) if you haven't already done so. 
+Follow the instructions provided to set up MySQL on your local machine.
+3. Download and install Node.js from the [official website](https://nodejs.org/en/download) if you haven't already done so.
+ Follow the instructions provided to install Node.js on your local machine.
 4. Open your terminal and navigate to the root directory of the application
-5. Install the required dependencies by running ```npm install```
-6. Log in to the MySQL server by running the command mysql ```-u root -p``` and entering your password when prompted.
-7. Create the database schema by running the command ```SOURCE db/schema.sql;```
-8. Seed the database with data by running the command ```SOURCE db/seeds.sql;``` 
+5. Install the required dependencies by running ```npm install``` this will install all the necessary packages and libraries required for the application to run.
+6. Create a ```.env``` file in the root directory of the application by running the command ```touch .env```. This file will contain sensitive information such as passwords, so be sure to keep it secure.
+7. In the .env file, add the following lines, replacing your_password with the password for your MySQL login
+```
+DB_HOST='localhost'
+DB_USER='root'
+DB_PASSWORD='your_password'
+DB_NAME='employee_db'
+``` 
+8. Log in to the MySQL server by running the command mysql ```-u root -p``` and entering your password when prompted.
+9. Create the database schema by running the command ```SOURCE db/schema.sql;```
+10. Seed the database with data by running the command ```SOURCE db/seeds.sql;``` 
 
-*Please note that steps 6-8 should be performed in a separate terminal window or tab from the one running the Node.js application.*
+*Please note that steps 8-10 should be performed in a separate terminal window or tab from the one running the Node.js application.*
 
-## Usage
+## Running the Application
 To use this application, please follow the steps below:
 
 1. Open a terminal window and navigate to the ```src``` directory of the application
