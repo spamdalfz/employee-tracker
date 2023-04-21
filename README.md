@@ -22,7 +22,7 @@ Follow the instructions provided to set up MySQL on your local machine.
 3. Download and install Node.js from the [official website](https://nodejs.org/en/download) if you haven't already done so.
  Follow the instructions provided to install Node.js on your local machine.
 4. Open your terminal and navigate to the root directory of the application
-5. Install the required dependencies by running ```npm install``` this will install all the necessary packages and libraries required for the application to run.
+5. Install the required dependencies by running ```npm install```, this will install all the necessary packages and libraries required for the application to run.
 6. Create a ```.env``` file in the root directory of the application by running the command ```touch .env```. This file will contain sensitive information such as passwords, so be sure to keep it secure.
 7. In the .env file, add the following lines, replacing your_password with the password for your MySQL login
 ```
