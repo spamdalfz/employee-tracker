@@ -31,7 +31,7 @@ DB_USER='root'
 DB_PASSWORD='your_password'
 DB_NAME='employee_db'
 ``` 
-8. Log in to the MySQL server by running the command mysql ```-u root -p``` and entering your password when prompted.
+8. Log in to the MySQL server by running the command ```mysql -u root -p``` and entering your password when prompted.
 9. Create the database schema by running the command ```SOURCE db/schema.sql;```
 10. Seed the database with data by running the command ```SOURCE db/seeds.sql;``` 
 
