@@ -46,9 +46,9 @@ To use this application, please follow the steps below:
 4. Follow the prompts to perform the desired action
 5. To exit the application, select "Exit" from the main menu or press Ctrl + C
 
-For a more detailed explanation of how to use this application, please refer to the [video tutorial]('video link here').
+For a short demonstration of the application, please refer to the [video](https://drive.google.com/file/d/1cnt5tiqcQcCrGN9lKpp_BA1Gg0pq9Bsu/view).
 
-![Alt Text](./assets/images/screenshot.JPG)
+![Alt Text](./assets/gif/EM.gif)
 
 ## Dependencies
 This project requires the following dependencies:
