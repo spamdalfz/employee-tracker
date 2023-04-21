@@ -1,3 +1,4 @@
+// Importing the main prompt and action functions from other files
 const { mainPrompt } = require("./prompt");
 
 const {
@@ -13,6 +14,7 @@ const {
     viewDepartmentBudget
 } = require("./actions");
 
+// Defining an object that maps user input to action functions
 const actionHandlers = {
     "View all departments": viewAllDepartments,
     "View all roles": viewAllRoles,
@@ -26,7 +28,7 @@ const actionHandlers = {
     "View department budget": viewDepartmentBudget,
 };
 
-
+// Function to print a welcome message to the console
 const printWelcomeMessage = () => {
     console.log(`
     
@@ -40,6 +42,8 @@ const printWelcomeMessage = () => {
 
     `);
 };
+
+// Main function that handles user input and calls the appropriate action function
 const main = async () => {
     printWelcomeMessage();
     let exit = false;
@@ -59,5 +63,5 @@ const main = async () => {
     }
 };
 
+// Call the main function to start the application
 main();
-

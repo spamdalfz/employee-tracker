@@ -9,6 +9,7 @@ const dbConfig = {
     database: process.env.DB_DATABASE
 };
 
+// Retrieves all departments from the database and transforms the results into an array of objects with name and value properties.
 const getDepartments = async () => {
     try {
         const connection = await mysql.createConnection(dbConfig);
@@ -24,7 +25,8 @@ const getDepartments = async () => {
         console.error('Error connecting to the database:', err);
     }
 };
-// 
+
+// Retrieves all roles from the database and transforms the results into an array of objects with name, value, department, and salary properties.
 const getRoles = async () => {
     try {
         const connection = await mysql.createConnection(dbConfig);
@@ -46,7 +48,7 @@ const getRoles = async () => {
     }
 };
 
-
+// Retrieves all employees from the database. The results are returned as an array of objects.
 const getEmployees = async () => {
     try {
         const connection = await mysql.createConnection(dbConfig);
@@ -71,6 +73,7 @@ const getEmployees = async () => {
     }
 };
 
+// Retrieves all employees without a manager from the database and transforms the results into an array of objects with name and value properties.
 const getManagers = async () => {
     try {
         const connection = await mysql.createConnection(dbConfig);

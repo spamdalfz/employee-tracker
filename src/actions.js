@@ -1,3 +1,4 @@
+// Importing prompts and database operations from other files
 const {
     addDepartmentPrompt,
     addRolePrompt,
@@ -21,6 +22,7 @@ const {
     getDepartmentBudget,
 } = require("./dbOperations");
 
+// Functions for displaying all departments, roles, and employees
 const viewAllDepartments = async () => {
     const departments = await getDepartments();
     console.table(departments);
@@ -36,6 +38,7 @@ const viewAllEmployees = async () => {
     console.table(employees);
 };
 
+// Functions for adding a department, role, or employee to the database
 const addDepartment = async () => {
     const { departmentName } = await addDepartmentPrompt();
     await createDepartment(departmentName);
@@ -64,6 +67,7 @@ const addEmployee = async () => {
     console.log(`\n Successfully added ${employeeFirstName} ${employeeLastName} to the database \n`);
 };
 
+// Functions for updating an employee's role or manager
 const updateEmployeeRoleAction = async () => {
     const { employeeToUpdate, newRole } = await updateEmployeeRolePrompt();
     await updateEmployeeRole(employeeToUpdate, newRole);
@@ -76,6 +80,7 @@ const updateEmployeeManagerAction = async () => {
     console.log(`\n Successfully updated employee manager \n`)
 };
 
+// Function for deleting a department, role, or employee from the database
 const deleteEntityAction = async () => {
     const { entityType, departmentToDelete, roleToDelete, employeeToDelete } = await deleteEntityPrompt();
     await deleteEntity(entityType, departmentToDelete || roleToDelete || employeeToDelete);
@@ -83,12 +88,14 @@ const deleteEntityAction = async () => {
 
 };
 
+// Function for viewing the budget of a department
 const viewDepartmentBudget = async () => {
     const { departmentToView } = await viewDepartmentBudgetPrompt();
     const budget = await getDepartmentBudget(departmentToView);
     console.log(`\n The budget for the selected department is: ${budget} \n`);
 };
 
+// Exporting all functions as properties of an object
 module.exports = {
     viewAllDepartments,
     viewAllRoles,
